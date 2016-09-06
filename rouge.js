@@ -46,7 +46,11 @@ function playerScan(player, guards) {
     for (i = 0; i < guards.length; i++) {
         //make sure we can see the entity unless it needs to be hidden
         showEntity(guards[i])
-        if (scan(player,guards[i]) === 3) {
+        if (scan(player, guards[i]) === 1) {
+            document.getElementById('text').innerHTML += 'You see a guard. He can see you an all.<br/>'
+        } else if (scan(player, guards[i]) === 2) {
+            document.getElementById('text').innerHTML += 'You hear a guard behind the wall.<br/>'
+        } else if (scan(player,guards[i]) === 3) {
             hideEntity(guards[i])  
         }
         noOfGuardsScanned++
@@ -77,7 +81,6 @@ function showEntity(entity) {
     
 document.onkeydown = function(e) {
     document.getElementById('text').innerHTML = ''
-    document.getElementById('text2').innerHTML = ''
 
     const direction = keyCodeToDirection[e.keyCode]
     
@@ -85,7 +88,9 @@ document.onkeydown = function(e) {
         //stop screen scroll
         e.preventDefault()
         player = move(player, direction)
-        
+        if (player.currentTile === ',') {
+            document.getElementById('text').innerHTML += 'Shuffle shuffle shuffle. Grass makes less noise.<br/>'
+        }
         if (guardsMove(guards)) {
             if (playerScan(player, guards)) {
                 render(map)
@@ -95,12 +100,9 @@ document.onkeydown = function(e) {
 }  
 
 function move(entity, direction) {
-    
     const newPosition = addPoint(entity, direction)
     const newTile = map[newPosition.y][newPosition.x]
-    if (newTile === '.') {
-        return teleportEntity(entity, newPosition, newTile)
-    } else if (newTile === ',') {
+    if (newTile === '.' || newTile === ',') {
         return teleportEntity(entity, newPosition, newTile)
     } 
     return entity
@@ -112,13 +114,6 @@ function teleportEntity(entity, {x, y}, newTile) {
     return{x, y, char: entity.char, currentTile: newTile}
 }
 
-
 if (playerScan(player, guards)) {
     render(map)
 }
-
-
-
-//document.getElementById('text').innerHTML = 'You see a guard. He can see you an all'
-//document.getElementById('text').innerHTML = 'You hear a guard behind the wall'
-//document.getElementById('text2').innerHTML = 'Shuffle shuffle shuffle. Grass makes less noise'
