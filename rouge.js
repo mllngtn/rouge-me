@@ -6,7 +6,12 @@ const keyCodeToDirection = {
     37: {x: -1, y: 0},
     38: {x: 0, y: -1},
     39: {x: 1, y: 0},
-    40: {x: 0, y: 1}
+    40: {x: 0, y: 1},
+}
+
+const currentTileToRange = {
+    '.': 4,
+    ',': 2,
 }
 
 function randomDirection(min,max) {
@@ -21,19 +26,19 @@ function render(map) {
     document.getElementById('maze').innerHTML = map.map(characters => characters.join('')).join('\n')
 }
 
-function canHear(entity1, entity2) {
+function canHear(entity1, entity2, range) {
     //The some() method tests whether some element in the array passes the test implemented by the provided function.
     //can entity1 hear entity2?
-    return rectAroundPoint(player, 4).some(point => point.x === entity2.x && point.y === entity2.y)
+    return rectAroundPoint(entity1, range).some(point => point.x === entity2.x && point.y === entity2.y)
 }
 
-function scan(entity1, entity2) {   
+function scan(entity1, entity2, range) {   
     //can entity1 see entity2?
     if (canSee(entity1, entity2)) {
         return 1
     } else {
         //if not, check if entity1 can hear entity 2...
-        if (canHear(entity1, entity2)) {
+        if (canHear(entity1, entity2, range)) {
             return 2
         } else {
             return 3
@@ -44,13 +49,14 @@ function scan(entity1, entity2) {
 function playerScan(player, guards) {
     var noOfGuardsScanned = 0;
     for (i = 0; i < guards.length; i++) {
-        //make sure we can see the entity unless it needs to be hidden
+        //make sure we can see the guard unless it needs to be hidden
         showEntity(guards[i])
-        if (scan(player, guards[i]) === 1) {
-            document.getElementById('text').innerHTML += 'You see a guard. He can see you an all.<br/>'
-        } else if (scan(player, guards[i]) === 2) {
+        const range = currentTileToRange[guards[i].currentTile]
+        if (scan(player, guards[i], range) === 1) {
+            document.getElementById('text').innerHTML += 'You see a guard.<br/>'
+        } else if (scan(player, guards[i], range) === 2) {
             document.getElementById('text').innerHTML += 'You hear a guard behind the wall.<br/>'
-        } else if (scan(player,guards[i]) === 3) {
+        } else if (scan(player,guards[i], range) === 3) {
             hideEntity(guards[i])  
         }
         noOfGuardsScanned++
@@ -61,13 +67,21 @@ function playerScan(player, guards) {
 }
 
 function guardsMove(guards) {
-    var noOfGuardsMoved = 0;
+    var noOfGuardsHavingMoved = 0;
+    const range = currentTileToRange[player.currentTile]
     for (i = 0; i < guards.length; i++) {
         const guardDirection = keyCodeToDirection[randomDirection(37,40)]
-        guards[i] = move(guards[i], guardDirection) 
-        noOfGuardsMoved++
+        guards[i] = move(guards[i], guardDirection)
+        if (scan(guards[i], player, range) === 1) {
+            document.getElementById('text').innerHTML += 'A guard can see you. You idiot.<br/>'
+        } else if (scan(guards[i], player, range) === 2) {
+            document.getElementById('text').innerHTML += 'You&#8217;ve been heard by a guard! Nightmare.<br/>'
+        } else if (scan(guards[i], player, range) === 3) {
+            
+        }
+        noOfGuardsHavingMoved++
     }
-    if (noOfGuardsMoved === guards.length) {
+    if (noOfGuardsHavingMoved === guards.length) {
         return true
     }
 }
