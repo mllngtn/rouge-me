@@ -18,4 +18,6 @@ Watch out! You've been dropped into a maximum security area. Use your spidey sen
 
 The game will tell you if you can see or hear a guard.
 
+The game will also tell you if a guard sees or hears you.
+
 Er.. that's it.
