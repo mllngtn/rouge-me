@@ -1,3 +1,5 @@
+//Bresenham's algorithm for line of sight'
+
 function coordinates(yPoint, xPoint) {
     return {x: xPoint, y: yPoint}
 }
@@ -17,7 +19,6 @@ function canSee (entity1, entity2) {
     var err = dx - dy;
     // Set first coordinates
     //coordinatesArray.push(new coordinates(y1, x1));
-    //canSee = true
     // Main loop
     while (!((x1 == x2) && (y1 == y2))) {
       var e2 = err << 1;

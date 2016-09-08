@@ -73,11 +73,11 @@ function guardsMove(guards) {
         const guardDirection = keyCodeToDirection[randomDirection(37,40)]
         guards[i] = move(guards[i], guardDirection)
         if (scan(guards[i], player, range) === 1) {
-            document.getElementById('text').innerHTML += 'A guard can see you. You idiot.<br/>'
+            entityIsAlerted(guards[i], player, guards[i].alert.seeingFactor)
         } else if (scan(guards[i], player, range) === 2) {
-            document.getElementById('text').innerHTML += 'You&#8217;ve been heard by a guard! Nightmare.<br/>'
+            entityIsAlerted(guards[i], player, guards[i].alert.hearingFactor)
         } else if (scan(guards[i], player, range) === 3) {
-            
+            entityCannotSeePlayer(guards[i], player)
         }
         noOfGuardsHavingMoved++
     }
@@ -105,6 +105,7 @@ document.onkeydown = function(e) {
         if (player.currentTile === ',') {
             document.getElementById('text').innerHTML += 'Shuffle shuffle shuffle. Grass makes less noise.<br/>'
         }
+
         if (guardsMove(guards)) {
             if (playerScan(player, guards)) {
                 render(map)
@@ -114,18 +115,32 @@ document.onkeydown = function(e) {
 }  
 
 function move(entity, direction) {
-    const newPosition = addPoint(entity, direction)
-    const newTile = map[newPosition.y][newPosition.x]
-    if (newTile === '.' || newTile === ',') {
-        return teleportEntity(entity, newPosition, newTile)
-    } 
-    return entity
+    if (entity.alert.count) {
+        console.log('alert count = ' + entity.alert.count)
+        console.log('alert level = ' + entity.alert.level)
+    }
+    //don't move an entity if they are at alert level 1!
+    if (entity.alert.count === 1 && entity.alert.level < 1) {
+        return entity
+    } else {
+        const newPosition = addPoint(entity, direction)
+        const newTile = map[newPosition.y][newPosition.x]
+        if (newTile === '.' || newTile === ',') {
+            return teleportEntity(entity, newPosition, newTile)
+        } 
+        return entity
+    }
+   
 }
 
 function teleportEntity(entity, {x, y}, newTile) {
     map[entity.y][entity.x] = entity.currentTile
     map[y][x] = entity.char
-    return{x, y, char: entity.char, currentTile: newTile}
+    entity.currentTile = newTile
+    entity.x = x
+    entity.y = y
+    return(entity)
+    //return{x, y, char: entity.char, currentTile: newTile}
 }
 
 if (playerScan(player, guards)) {

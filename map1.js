@@ -12,10 +12,25 @@ const map1 = {
     ]
 }
 
-let player = {x:1, y:1, char:'@', currentTile:'.'}
+let player = {x:1, y:1, char:'@', currentTile:'.', alert:{level:0}}
 
-let guard0 = {x:3, y:4, char:'G', currentTile:'.'}
+let guard = function (x, y, currentTile) {
+    this.x = x
+    this.y = y
+    this.currentTile = currentTile
+    this.char = 'G'
+    this.alert = {
+        level:0,
+        count:0,
+        x:0,
+        y:0,
+        hearingFactor:guardHearingFactor,
+        seeingFactor:guardSeeingFactor,
+    }
+};
 
-let guard1 = {x:7, y:1, char:'G', currentTile:'.'}
+let guard0 = new guard(3, 4, '.')
 
-let guards = [guard0, guard1]
+let guard1 = new guard(12, 1, ',')
+
+let guards = [guard0]
