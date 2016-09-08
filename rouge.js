@@ -79,6 +79,8 @@ function guardsMove(guards) {
         } else if (scan(guards[i], player, range) === 3) {
             entityCannotSeePlayer(guards[i], player)
         }
+        console.log('alert count = ' + guards[i].alert.count)
+        console.log('alert level = ' + guards[i].alert.level)
         noOfGuardsHavingMoved++
     }
     if (noOfGuardsHavingMoved === guards.length) {
@@ -115,10 +117,6 @@ document.onkeydown = function(e) {
 }  
 
 function move(entity, direction) {
-    if (entity.alert.count) {
-        console.log('alert count = ' + entity.alert.count)
-        console.log('alert level = ' + entity.alert.level)
-    }
     //don't move an entity if they are at alert level 1!
     if (entity.alert.count === 1 && entity.alert.level < 1) {
         return entity
