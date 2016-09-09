@@ -1,8 +1,3 @@
-function canHear(entity1, entity2, range) {
-    //can entity1 hear entity2?
-    return rectAroundPoint(entity1, range).some(point => point.x === entity2.x && point.y === entity2.y)
-}
-
 function scan(entity1, entity2, range) {   
     //can entity1 see entity2?
     if (canSee(entity1, entity2)) {

@@ -1,3 +1,8 @@
+function canHear(entity1, entity2, range) {
+    //can entity1 hear entity2?
+    return rectAroundPoint(entity1, range).some(point => point.x === entity2.x && point.y === entity2.y)
+}
+
 function rectAroundPoint(point, diameter) {
     const radius = Math.floor(diameter / 2)
     return getRect({x: point.x - radius, y: point.y - radius}, {x: point.x + radius, y: point.y + radius})

@@ -18,7 +18,7 @@ Watch out! You've been dropped into a maximum security area. Use your spidey sen
 
 The game will tell you if you can see or hear a guard.
 
-The guards can also see and hear you.
+The guards can also see and hear you, and will chase you if you get all up in their grill.
 
 Er.. that's it.
 
