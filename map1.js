@@ -1,3 +1,5 @@
+let guardHearingFactor = 4
+let guardSeeingFactor = 2
 
 const map1 = {
     maze: [
@@ -19,6 +21,9 @@ let guard = function (x, y, currentTile) {
     this.y = y
     this.currentTile = currentTile
     this.char = 'G'
+    this.hasPath = false
+    this.maxAlertCount = 10
+    this.path = []
     this.alert = {
         level:0,
         count:0,
@@ -26,6 +31,7 @@ let guard = function (x, y, currentTile) {
         y:0,
         hearingFactor:guardHearingFactor,
         seeingFactor:guardSeeingFactor,
+        path:[]
     }
 };
 
