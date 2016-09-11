@@ -1,5 +1,15 @@
+/*
+    give me an array full of NPCs, and for each one I will:
+    1) ask if they can see the player,
+    2) and depending on the answer that comes back,
+    3) tell them to:
+        a) pause,
+        b) follow the player,
+        c) follow a previously set path (eg a patrol route)
+        d) move randomly
+    4) before returning true to let rouge.js know that I've finished
+*/
 function npcScanAndMove(entities, player) {
-
     var noOfEntitiesScanned = 0;
     for (i = 0; i < entities.length; i++) {
         entities[i] = npcScan(entities[i], player)
@@ -19,26 +29,37 @@ function npcScanAndMove(entities, player) {
     }    
 }
 
+/*
+    Ask if a given NPC knows where the player is, by calling the scan() function (found in ai/shared.js):
+    1) They see the player, and increase their alert level via the increaseAlertLevel() function
+    2) They hear the player, and increase their alert level via the increasAlertLevel() function
+    3) They neither see nor hear the player, and we increase alert.count by 1
+       (alert.count counts the number of turns since an entity last saw the player. 
+       When it reaches the entity's maxAlertCount, 
+       the entity forgets they ever saw the player (alert.level returns to 0)).
+*/
 function npcScan(entity, player) {
-    
     const range = currentTileToRange[player.currentTile]
     if (scan(entity, player, range) === 1) {
         entity = increaseAlertLevel(entity, entity.alert.seeingFactor)
+        document.getElementById('text2').innerHTML += 'Oh shit! A guard can see you.<br/>'
     } else if (scan(entity, player, range) === 2) {
         entity = increaseAlertLevel(entity, entity.alert.hearingFactor)
+        document.getElementById('text2').innerHTML += 'Watch out! A guard can hear you.<br/>'
     } else if (scan(entity, player, range) === 3) {
         entity.alert.count++
-        //guard = entityCannotSeePlayer(guard, player)
     }
     return entity
 }
 
+//increase an entity's alert level by a 1 over a given factor
 function increaseAlertLevel(entity, factor) {
     entity.alert.level = (entity.alert.level + (1 / factor))
     entity.alert.count = 0
     return entity
 }
-
+//if a given entity has ONLY JUST seen or heard the player this turn, they should pause as if in thought
+//(unless their alert level has reached 1 and they need to start chasing the player)
 function shouldIPause(entity) {
     if (entity.alert.count === 0 && entity.alert.level <= 1) {
         return true
@@ -46,15 +67,18 @@ function shouldIPause(entity) {
         return false
     }
 }
-
+//if our entity last saw the player fewer turns ago than their maxAlertCount, and their alert level is above 1,
+//they should chase the player!
 function shouldIFollowPlayer(entity) {
     if (entity.alert.count < entity.maxAlertCount && entity.alert.level >= 1) {
+        document.getElementById('text2').innerHTML += 'Now you&#39;ve done it!<br/>A guard has become suspicious and has started following you.<br/>'
         return true
     } else {
         return false
     }
 }
-
+//find a path to our player, using the EasyStar A* pathfinding algorithm...
+//...and move our entity one node along that path!
 function followPlayer(entity, player) {
     var pathfinder = new EasyStar.js()
     pathfinder.setGrid(map1.maze)
@@ -69,11 +93,11 @@ function followPlayer(entity, player) {
     })
     pathfinder.calculate()
 }
-
+//follow a given path (eg a patrol) - not yet implemented
 function followPath(entity) {
     console.log('trying to follow a path that is nae there yet')
 }
-
+//move in a random direction, using functions provided in utils.js
 function moveRandomly(entity) {
     const direction = keyCodeToDirection[randomDirection(37,40)]
     if (direction) {

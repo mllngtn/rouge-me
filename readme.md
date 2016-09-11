@@ -41,3 +41,11 @@ While Alert Count is 1 and Alert Level is less than 1 (i.e. for the first 2 turn
 After these first 2 / 4 turns (i.e. when the Alert Level gets to 1), the guard will chase you.
 
 If a guard doesn't see or hear you for 10 turns (i.e the Alert Count has got to 10), their Alert Level is reset to zero, and they go back to what they were doing before.
+
+## Stuff what I nicked
+
+Easystar: A* pathfinding in JS (https://github.com/prettymuchbryce/easystarjs)
+
+Bresenham's algorithm for line of sight - from avok00 on StackOverflow (http://stackoverflow.com/questions/4672279/bresenham-algorithm-in-javascript)
+
+Hearing rectangle - from Ed Robinson's tutorial, which is how I started on this voyage of self discovery (https://gist.github.com/anotheredward/5895c31d007bda14b45fc5e3be694dcf)

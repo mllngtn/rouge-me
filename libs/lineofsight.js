@@ -1,5 +1,6 @@
-//Bresenham's algorithm for line of sight'
+//Bresenham's algorithm for line of sight, nicked from StackOverflow
 
+//I added a little coordinate function, though. What a legend.
 function coordinates(yPoint, xPoint) {
     return {x: xPoint, y: yPoint}
 }

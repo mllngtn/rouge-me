@@ -1,3 +1,11 @@
+/*
+    Can our player see any other entities of note? 
+    Find out by calling the scan() function (found in ai/shared.js) on any entities of note:
+    1) The player sees the entity, and is told so via the UI
+    2) The player hears the entity, and is told so via the UI
+    3) The player neither sees nor hear the entity, which is hidden from view
+    When finished, return true to let rogue.js know that we're done
+*/
 function playerScan(player, entities) {
     var noOfEntitiesScanned = 0;
     for (i = 0; i < entities.length; i++) {
@@ -17,7 +25,7 @@ function playerScan(player, entities) {
         return true
     }
 }
-
+//move the player! With special UI messages for special tiles
 function movePlayer (player, direction) {
     move(player, direction)
     if (player.currentTile === ',') {

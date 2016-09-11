@@ -1,3 +1,5 @@
+//EasyStar, an implementation of the A* pathfinding algorithm by Bryce Neal
+
 var EasyStar =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
