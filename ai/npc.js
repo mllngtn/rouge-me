@@ -35,7 +35,7 @@ function npcScanAndMove(entities, player) {
     2) They hear the player, and increase their alert level via the increasAlertLevel() function
     3) They neither see nor hear the player, and we increase alert.count by 1
        (alert.count counts the number of turns since an entity last saw the player. 
-       When it reaches the entity's maxAlertCount, 
+       When alert.count reaches its maxAlertCount, 
        the entity forgets they ever saw the player (alert.level returns to 0)).
 */
 function npcScan(entity, player) {
@@ -48,6 +48,10 @@ function npcScan(entity, player) {
         document.getElementById('text2').innerHTML += 'Watch out! A guard can hear you.<br/>'
     } else if (scan(entity, player, range) === 3) {
         entity.alert.count++
+        if (entity.alert.count === entity.maxAlertCount) {
+            entity.alert.level = 0
+            document.getElementById('text2').innerHTML += '<span style="color:#82E0AA">You remember that guard from earlier? They&#39;ve forgotten all about you. PHEW.</span><br/>'
+        }
     }
     return entity
 }
