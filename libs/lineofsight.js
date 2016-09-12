@@ -6,7 +6,7 @@ function coordinates(yPoint, xPoint) {
 }
 
 function canSee (entity1, entity2) {
-    var coordinatesArray = [];
+    //var coordinatesArray = [];
     // Translate coordinates
     var x1 = entity1.x;
     var y1 = entity1.y;
@@ -41,8 +41,12 @@ function canSee (entity1, entity2) {
       } 
 
       // Set coordinates
-      coordinatesArray.push({x1, y1})
+      //coordinatesArray.push({x1, y1})
     }
+
+     //work out the distance between our two entities 
+     //(we can't use the number of tiles canSee() has flipped through, because canSee() allows diagonals!)
+     distanceFrom = Math.abs((entity2.x - entity1.x)) + Math.abs((entity2.y - entity1.y))
 
     /*
       1) If the player is being searched for by an NPC, and there are no walls in the way:
@@ -57,15 +61,17 @@ function canSee (entity1, entity2) {
         d) Otherwise, they can be seen!
     */
     if (entity2.char === '@') {
-      if (entity2.currentTile === '/' && coordinatesArray.length > entity2.beSeenInShadow) {
+      if (entity2.currentTile === '/' && distanceFrom > entity2.beSeenInShadow) {
         return false
       } else {
         return true
       }
-    } else if (entity2.currentTile === '/' && coordinatesArray.length > entity1.seeInShadow) {
-      return false
     } else {
-      return true
+      if (entity2.currentTile === '/' && distanceFrom > entity1.seeInShadow) {
+        return false
+      } else {
+        return true
+      }
     }
-    
+
   }
