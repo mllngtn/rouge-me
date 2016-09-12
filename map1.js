@@ -19,4 +19,4 @@ let guard0 = new guard(3, 4, '.')
 let guard1 = new guard(12, 1, '/')
 
 //...and stick them in an array
-let guards = [guard1]
+let guards = [guard0, guard1]
