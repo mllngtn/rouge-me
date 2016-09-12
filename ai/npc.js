@@ -49,8 +49,10 @@ function npcScan(entity, player) {
     } else if (scan(entity, player, range) === 3) {
         entity.alert.count++
         if (entity.alert.count === entity.maxAlertCount) {
-            entity.alert.level = 0
-            document.getElementById('text2').innerHTML += '<span style="color:#82E0AA">You remember that guard from earlier? They&#39;ve forgotten all about you. PHEW.</span><br/>'
+            if (entity.alert.level > 0) {
+                entity.alert.level = 0
+                document.getElementById('text2').innerHTML += '<span style="color:#82E0AA">You remember that guard from earlier? They&#39;ve forgotten all about you. PHEW.</span><br/>'
+            }
         }
     }
     return entity
