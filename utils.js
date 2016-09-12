@@ -15,6 +15,7 @@ const keyCodeToDirection = {
 const currentTileToRange = {
     '.': 4,
     ',': 2,
+    '/': 4,
 }
 
 //add two points together
@@ -40,7 +41,7 @@ function showEntity(entity) {
 function move(entity, direction) {
     const newPosition = addPoint(entity, direction)
     const newTile = map[newPosition.y][newPosition.x]
-    if (newTile === '.' || newTile === ',') {
+    if (newTile === '.' || newTile === ',' || newTile === '/') {
         return teleportEntity(entity, newPosition, newTile)
     } 
     return entity

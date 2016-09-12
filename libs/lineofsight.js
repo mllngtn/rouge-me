@@ -6,7 +6,7 @@ function coordinates(yPoint, xPoint) {
 }
 
 function canSee (entity1, entity2) {
-    //var coordinatesArray = new Array();
+    var coordinatesArray = [];
     // Translate coordinates
     var x1 = entity1.x;
     var y1 = entity1.y;
@@ -18,8 +18,7 @@ function canSee (entity1, entity2) {
     var sx = (x1 < x2) ? 1 : -1;
     var sy = (y1 < y2) ? 1 : -1;
     var err = dx - dy;
-    // Set first coordinates
-    //coordinatesArray.push(new coordinates(y1, x1));
+
     // Main loop
     while (!((x1 == x2) && (y1 == y2))) {
       var e2 = err << 1;
@@ -36,15 +35,37 @@ function canSee (entity1, entity2) {
       //if there is a wall between the two entities... then they cannot see each other
       if (thisTile === '#') {
           return false
-          //console.log(x1 + ' and ' + y1)
           break
       } else if (x1 === x2 && y1 === y2) {
-          return true
+          //this used to return true, before I added the more complex stuff below
       } 
 
       // Set coordinates
-      //coordinatesArray.push({x1, y1});
+      coordinatesArray.push({x1, y1})
     }
-    // Return the result
-    //return coordinatesArray;
+
+    /*
+      1) If the player is being searched for by an NPC, and there are no walls in the way:
+        a) if the player is in the shadows...
+        b) ...and there are more than (player.seeInShadow) number of tiles between player and NPC...
+        c) ...then they can't be seen.
+        d) Otherwise, they can be seen!
+      2) Else if the player is searching for an NPC, and there are no walls in the way:
+        a) if the NPC is in the shadows...
+        b) ...and there are more than (player.seeInShadow) number of tiles between player and NPC...
+        c) ...then they can't be seen.
+        d) Otherwise, they can be seen!
+    */
+    if (entity2.char === '@') {
+      if (entity2.currentTile === '/' && coordinatesArray.length > entity2.beSeenInShadow) {
+        return false
+      } else {
+        return true
+      }
+    } else if (entity2.currentTile === '/' && coordinatesArray.length > entity1.seeInShadow) {
+      return false
+    } else {
+      return true
+    }
+    
   }

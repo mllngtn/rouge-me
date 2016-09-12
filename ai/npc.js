@@ -58,6 +58,7 @@ function npcScan(entity, player) {
     return entity
 }
 
+
 //increase an entity's alert level by a 1 over a given factor
 function increaseAlertLevel(entity, factor) {
     entity.alert.level = (entity.alert.level + (1 / factor))
@@ -88,7 +89,7 @@ function shouldIFollowPlayer(entity) {
 function followPlayer(entity, player) {
     var pathfinder = new EasyStar.js()
     pathfinder.setGrid(map1.maze)
-    pathfinder.setAcceptableTiles(['.',','])
+    pathfinder.setAcceptableTiles(['.',',','/'])
     pathfinder.findPath(entity.x,entity.y,player.x,player.y, function(path){
         if(path) {
             path.shift()

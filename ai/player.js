@@ -30,6 +30,8 @@ function movePlayer (player, direction) {
     move(player, direction)
     if (player.currentTile === ',') {
         document.getElementById('text').innerHTML += 'Shuffle shuffle shuffle. Grass makes less noise.<br/>'
+    } else if (player.currentTile === '/') {
+        document.getElementById('text').innerHTML += 'You hunker in the shadows, shrouded in darkness etc.<br/>'
     }
     return player
 }

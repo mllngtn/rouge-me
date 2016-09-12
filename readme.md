@@ -22,6 +22,28 @@ The guards can also see and hear you, and will chase you if you get all up in th
 
 Er.. that's it.
 
+### @
+
+This is you. Hello, you!
+
+### G 
+
+This is a guard. Boooooo.
+
+### .
+
+These tiles represent normal ground. You can be seen and heard a normal amount, as can guards on the same ground.
+
+### / 
+
+These tiles represent shadowy ground. You cannot be seen so easily if you are hidden in the shadows... but watch out. Guards can also conceal themselves in darkness.
+
+### ,
+
+These tiles represent grass. You cannot be heard so easily if you're shuffling around in the long grass... but watch out. Guards on the grass are also quieter.
+
+Don't worry though. You can always see and hear just a little bit better than the guards. Natch.
+
 ## Guard Alert Levels
 
 Guards have two alert variables: Alert Level and Alert Count.
