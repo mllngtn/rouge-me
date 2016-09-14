@@ -12,14 +12,13 @@ let player = {
 }
 
 //guard: alert level will increase 1/hearingFactor or 1/seeingFactor every time a guard sees or hears you
-let guard = function (x, y, currentTile) {
+let guard = function (x, y, currentTile, path) {
     this.x = x
     this.y = y
     this.currentTile = currentTile
     this.char = 'G'
-    this.hasPath = false
     this.maxAlertCount = 10
-    this.path = []
+    this.path = path
     this.alert = {
         level:0,
         count:0,

@@ -17,7 +17,7 @@ function npcScanAndMove(entities, player) {
             //do nothing!
         } else if (shouldIFollowPlayer(entities[i])) {
             followPlayer(entities[i], player)
-        } else if (entities[i].hasPath) {
+        } else if (entities[i].path.length > 0) {
             followPath(entities[i])
         } else {
             moveRandomly(entities[i])
@@ -93,8 +93,8 @@ function followPlayer(entity, player) {
     pathfinder.findPath(entity.x,entity.y,player.x,player.y, function(path){
         if(path) {
             path.shift()
-            entity.path = path 
-            const direction = {x: entity.path[0].x - entity.x, y: entity.path[0].y - entity.y}
+            entity.alert.path = path 
+            const direction = {x: entity.alert.path[0].x - entity.x, y: entity.alert.path[0].y - entity.y}
             entity = move(entity, direction)
         }
     })
@@ -102,7 +102,19 @@ function followPlayer(entity, player) {
 }
 //follow a given path (eg a patrol) - not yet implemented
 function followPath(entity) {
-    console.log('trying to follow a path that is nae there yet')
+    var j = ''
+    for (i = 0; i < entity.path.length; i++) { 
+        if (entity.path[i].x === entity.x && entity.path[i].y === entity.y) {
+            if (i === entity.path.length - 1) {
+                entity.path.reverse()
+                j = 1
+            } else {
+                j = i+1
+            }
+        }
+    }
+    const direction = {x: entity.path[j].x - entity.x, y: entity.path[j].y - entity.y}
+    entity = move(entity, direction)
 }
 //move in a random direction, using functions provided in utils.js
 function moveRandomly(entity) {
