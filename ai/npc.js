@@ -16,7 +16,7 @@ function npcScanAndMove(entities, player) {
         if (shouldIPause(entities[i])) {
             //do nothing!
         } else if (shouldIFollowPlayer(entities[i])) {
-            followPlayer(entities[i], player)
+            findPathAndMove(entities[i], player, true)
         } else if (entities[i].path.length > 0) {
             followPath(entities[i])
         } else {
@@ -58,13 +58,13 @@ function npcScan(entity, player) {
     return entity
 }
 
-
 //increase an entity's alert level by a 1 over a given factor
 function increaseAlertLevel(entity, factor) {
     entity.alert.level = (entity.alert.level + (1 / factor))
     entity.alert.count = 0
     return entity
 }
+
 //if a given entity has ONLY JUST seen or heard the player this turn, they should pause as if in thought
 //(unless their alert level has reached 1 and they need to start chasing the player)
 function shouldIPause(entity) {
@@ -74,6 +74,7 @@ function shouldIPause(entity) {
         return false
     }
 }
+
 //if our entity last saw the player fewer turns ago than their maxAlertCount, and their alert level is above 1,
 //they should chase the player!
 function shouldIFollowPlayer(entity) {
@@ -84,74 +85,95 @@ function shouldIFollowPlayer(entity) {
         return false
     }
 }
-//find a path to our player, using the EasyStar A* pathfinding algorithm...
+
+//find a path to a given node, using the EasyStar A* pathfinding algorithm...
 //...and move our entity one node along that path!
-function followPlayer(entity, player) {
+function findPathAndMove(entity, node, isAlert) {
     var pathfinder = new EasyStar.js()
     pathfinder.setGrid(map1.maze)
     pathfinder.setAcceptableTiles(['.',',','/'])
-    pathfinder.findPath(entity.x,entity.y,player.x,player.y, function(path){
+    pathfinder.findPath(entity.x,entity.y,node.x,node.y, function(path){
         if(path) {
             path.shift()
-            entity.alert.path = path 
-            const direction = {x: entity.alert.path[0].x - entity.x, y: entity.alert.path[0].y - entity.y}
-            entity = move(entity, direction)
+            if (isAlert) {
+                entity.alert.path = path 
+            }
+            moveToNode(entity, path[0])
         }
     })
     pathfinder.calculate()
 }
-//follow a given path (eg a patrol)
-function followPath(entity) {
 
-    let firstNode = entity.path[0]
-    let lastNode = entity.path[entity.path.length-1]
-    let j = ''
-    if (firstNode.x === lastNode.x && firstNode.y === lastNode.y) {
-        j = followCircularPath(entity)
-    } else {
-        j = followBackAndForthPath(entity)
-    }
-    const direction = {x: entity.path[j].x - entity.x, y: entity.path[j].y - entity.y}
+//move to a specific node
+function moveToNode(entity, node) {
+    const direction = {x: node.x - entity.x, y: node.y - entity.y}
     entity = move(entity, direction)
 }
 
-function followCircularPath(entity) {
+/*
+    This is how we follow a path:
+        1) look at all the nodes in our path
+        2) find the node that we're supposed to be stood on
+        3) are we actually stood on it? (we might have wandered off our path) 
+            if yes...
+            a) ...and we are on the last node in the path...
+                I) ...and we are on a circular path...
+                    i) ...scroll back to the start and move to node[1] (start tramping round the circle again!)
+                II)...and we are on a back-and-forth path...
+                    i)... reverse the path and move onto our new node[1] (go back the way we've come!)
+            b) ...if we are in the middle of the path, just move onto the next node
+        4) if we are not stood on the node we are supposed to be stood on, we need to get back there!
+            a) find a path back to the node we're supposed to be stood on!
+            b) move onto the first node in our new path!
+*/
+function followPath(entity) {
     let j = ''
-    for (let i = 0; i < entity.path.length; i++) { 
-        if (entity.path[i].t === 1) {
-            if (i === entity.path.length - 1) {
-                j = 1 
-                entity.path[i].t = 0
-                entity.path[j].t = 1
-                return j
+    for (var i = 0; i < entity.path.length; i++) { 
+        if (entity.path[i].t === 1) {  
+            if (isOnPath(entity, entity.path[i])) {  
+                if (i === entity.path.length - 1) {
+                    if (isCircularPath(entity.path)) {
+                        entity.path[i].t = 0
+                        j = 1 
+                        entity.path[j].t = 1
+                    } else {
+                        entity.path[i].t = 0
+                        entity.path.reverse()
+                        j = 1
+                        entity.path[j].t = 1
+                    } 
+                } else {
+                    j = i + 1
+                    entity.path[i].t = 0
+                    entity.path[j].t = 1
+                }
+                moveToNode(entity, entity.path[j])
+                return
             } else {
-                j = i + 1
-                entity.path[i].t = 0
-                entity.path[j].t = 1
-                return j
+                findPathAndMove(entity, entity.path[i], false)
+                return
             }
-            
-        }
+        } 
     }
 }
 
-function followBackAndForthPath(entity) {
-    let j = ''
-    for (let i = 0; i < entity.path.length; i++) { 
-        if (entity.path[i].t === 1) {
-            if (i === entity.path.length - 1) {
-                entity.path[i].t = 0
-                entity.path.reverse()
-                j = 1
-                entity.path[j].t = 1
-                return j
-            } else {
-                j = i + 1
-                entity.path[i].t = 0
-                entity.path[j].t = 1
-                return j
-            }
-        }
+//am I stood where I should be?
+function isOnPath(entity, node) {
+    if (entity.x === node.x && entity.y === node.y) {
+        return true
+    } else {
+        return false
+    }
+}
+
+//are we dealing with a circular path here? Circular paths have identical start and end nodes 
+function isCircularPath(path) {
+    let firstNode = path[0]
+    let lastNode = path[path.length-1]
+    if (firstNode.x === lastNode.x & firstNode.y === lastNode.y) {
+        return true
+    } else {
+        return false
     }
 }
 

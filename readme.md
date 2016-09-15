@@ -28,7 +28,7 @@ This is you. Hello, you!
 
 ### G 
 
-This is a guard. Boooooo.
+This is a guard. Boooooo. Guards will patrol around until such time as they notice you.
 
 ### .
 

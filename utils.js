@@ -39,7 +39,6 @@ function showEntity(entity) {
 
 //move a given entity in a given direction, via the teleportEntity function, if the entity is trying to move into a valid tile
 function move(entity, direction) {
-
     const newPosition = addPoint(entity, direction)
     const newTile = map[newPosition.y][newPosition.x]
     if (newTile === '.' || newTile === ',' || newTile === '/') {
