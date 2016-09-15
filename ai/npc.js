@@ -23,7 +23,6 @@ function npcScanAndMove(entities, player) {
             moveRandomly(entities[i])
         }
         noOfEntitiesScanned++
-        console.log(noOfEntitiesScanned)
     }
     if (noOfEntitiesScanned === entities.length) {
         return true
@@ -112,16 +111,13 @@ function followPath(entity) {
     } else {
         j = followBackAndForthPath(entity)
     }
-    let direction = {x: entity.path[j].x - entity.x, y: entity.path[j].y - entity.y}
+    const direction = {x: entity.path[j].x - entity.x, y: entity.path[j].y - entity.y}
     entity = move(entity, direction)
-    console.log(entity)
-    return entity
 }
 
 function followCircularPath(entity) {
-    console.log('cunt')
-    var j = ''
-    for (i = 0; i < entity.path.length; i++) { 
+    let j = ''
+    for (let i = 0; i < entity.path.length; i++) { 
         if (entity.path[i].t === 1) {
             if (i === entity.path.length - 1) {
                 j = 1 
@@ -140,20 +136,20 @@ function followCircularPath(entity) {
 }
 
 function followBackAndForthPath(entity) {
-    var x = ''
-    for (i = 0; i < entity.path.length; i++) { 
+    let j = ''
+    for (let i = 0; i < entity.path.length; i++) { 
         if (entity.path[i].t === 1) {
             if (i === entity.path.length - 1) {
                 entity.path[i].t = 0
                 entity.path.reverse()
-                x = 1
-                entity.path[x].t = 1
-                return x
+                j = 1
+                entity.path[j].t = 1
+                return j
             } else {
-                x = i + 1
+                j = i + 1
                 entity.path[i].t = 0
-                entity.path[x].t = 1
-                return x
+                entity.path[j].t = 1
+                return j
             }
         }
     }

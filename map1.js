@@ -67,7 +67,7 @@ var littleCirclue = [
 ]
 
 //here we define our guards..
-let guard0 = new guard(2, 4, '.', [])
+let guard0 = new guard(2, 4, '.', backAndForthPath)
 
 let guard1 = new guard(12, 2, '/', circularPath)
 
