@@ -14,11 +14,13 @@ Open 'rouge.html' in Chrome, and use the arrow keys to wander about.
 
 You play the part of a friendly @ sign.
 
-Watch out! You've been dropped into a maximum security area. Use your spidey senses to your advantage.
+Watch out! There are guards patrolling about. Use your spidey senses to your advantage.
 
 The game will tell you if you can see or hear a guard.
 
 The guards can also see and hear you, and will chase you if you get all up in their grill.
+
+If they lose track of you, they will return to their original patrol path.
 
 Er.. that's it.
 
