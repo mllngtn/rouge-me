@@ -23,6 +23,7 @@ function npcScanAndMove(entities, player) {
             moveRandomly(entities[i])
         }
         noOfEntitiesScanned++
+        console.log(noOfEntitiesScanned)
     }
     if (noOfEntitiesScanned === entities.length) {
         return true
@@ -100,22 +101,64 @@ function followPlayer(entity, player) {
     })
     pathfinder.calculate()
 }
-//follow a given path (eg a patrol) - not yet implemented
+//follow a given path (eg a patrol)
 function followPath(entity) {
+
+    let firstNode = entity.path[0]
+    let lastNode = entity.path[entity.path.length-1]
+    let j = ''
+    if (firstNode.x === lastNode.x && firstNode.y === lastNode.y) {
+        j = followCircularPath(entity)
+    } else {
+        j = followBackAndForthPath(entity)
+    }
+    let direction = {x: entity.path[j].x - entity.x, y: entity.path[j].y - entity.y}
+    entity = move(entity, direction)
+    console.log(entity)
+    return entity
+}
+
+function followCircularPath(entity) {
+    console.log('cunt')
     var j = ''
     for (i = 0; i < entity.path.length; i++) { 
-        if (entity.path[i].x === entity.x && entity.path[i].y === entity.y) {
+        if (entity.path[i].t === 1) {
             if (i === entity.path.length - 1) {
-                entity.path.reverse()
-                j = 1
+                j = 1 
+                entity.path[i].t = 0
+                entity.path[j].t = 1
+                return j
             } else {
-                j = i+1
+                j = i + 1
+                entity.path[i].t = 0
+                entity.path[j].t = 1
+                return j
+            }
+            
+        }
+    }
+}
+
+function followBackAndForthPath(entity) {
+    var x = ''
+    for (i = 0; i < entity.path.length; i++) { 
+        if (entity.path[i].t === 1) {
+            if (i === entity.path.length - 1) {
+                entity.path[i].t = 0
+                entity.path.reverse()
+                x = 1
+                entity.path[x].t = 1
+                return x
+            } else {
+                x = i + 1
+                entity.path[i].t = 0
+                entity.path[x].t = 1
+                return x
             }
         }
     }
-    const direction = {x: entity.path[j].x - entity.x, y: entity.path[j].y - entity.y}
-    entity = move(entity, direction)
 }
+
 //move in a random direction, using functions provided in utils.js
 function moveRandomly(entity) {
     const direction = keyCodeToDirection[randomDirection(37,40)]
