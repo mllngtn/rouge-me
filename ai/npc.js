@@ -90,7 +90,7 @@ function shouldIFollowPlayer(entity) {
 //...and move our entity one node along that path!
 function findPathAndMove(entity, node, isAlert) {  
     var pathfinder = new EasyStar.js()
-    pathfinder.setGrid(map1.maze)
+    pathfinder.setGrid(maze)
     pathfinder.setAcceptableTiles(['.',',','/'])
     pathfinder.findPath(entity.x,entity.y,node.x,node.y, function(path){
         if(path) {
