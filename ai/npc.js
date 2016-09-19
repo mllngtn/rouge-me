@@ -118,10 +118,12 @@ function moveToNode(entity, node) {
             if yes...
             a) ...and we are on the last node in the path...
                 I) ...and we are on a circular path...
-                    i) ...scroll back to the start and move to node[1] (start tramping round the circle again!)
+                    i) ...and there isn't another guard in our way...
+                    ii) ...scroll back to the start and move to node[1] (start tramping round the circle again!)
                 II)...and we are on a back-and-forth path...
+                    i) ...and there isn't another guard in our way...
                     i)... reverse the path and move onto our new node[1] (go back the way we've come!)
-            b) ...if we are in the middle of the path, just move onto the next node
+            b) ...if we are in the middle of the path, and there isn't another guard in our way, just move onto the next node
         4) if we are not stood on the node we are supposed to be stood on, we need to get back there!
             a) find a path back to the node we're supposed to be stood on!
             b) move onto the first node in our new path!
@@ -132,20 +134,33 @@ function followPath(entity) {
         if (entity.path[i].t === 1) {  
             if (isOnPath(entity, entity.path[i])) {  
                 if (i === entity.path.length - 1) {
+                    j = 1
+                    const newTile = map[entity.path[j].y][entity.path[j].x]
                     if (isCircularPath(entity.path)) {
-                        entity.path[i].t = 0
-                        j = 1 
-                        entity.path[j].t = 1
+                        if (newTile === 'G') {
+                            return 
+                        } else {
+                            entity.path[i].t = 0
+                            entity.path[j].t = 1
+                        }
                     } else {
-                        entity.path[i].t = 0
-                        entity.path.reverse()
-                        j = 1
-                        entity.path[j].t = 1
+                        if (newTile === 'G') {
+                            return 
+                        } else {
+                            entity.path[i].t = 0
+                            entity.path.reverse()
+                            entity.path[j].t = 1
+                        } 
                     } 
                 } else {
                     j = i + 1
-                    entity.path[i].t = 0
-                    entity.path[j].t = 1
+                    const newTile = map[entity.path[j].y][entity.path[j].x]
+                    if (newTile === 'G') {
+                        return 
+                    } else {
+                        entity.path[i].t = 0
+                        entity.path[j].t = 1
+                    }          
                 }
                 moveToNode(entity, entity.path[j])
                 return
