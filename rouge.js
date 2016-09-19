@@ -7,6 +7,8 @@ if (playerScan(player, guards)) {
     render(map)
 }
 
+var rendering = false
+
 /*  
     This is the logic that powers the whole show!
     1) find out which way the player wants to go, 
@@ -25,9 +27,11 @@ document.onkeydown = function(e) {
         e.preventDefault()
         player = movePlayer(player, direction)
         if (npcScanAndMove(guards, player)) {
-            if (playerScan(player, guards)) {
-                render(map)
-            }
+            setTimeout(function() {
+                if (playerScan(player, guards)) {   
+                    render(map)
+                }
+            }, 0)   
         }
     }
 }

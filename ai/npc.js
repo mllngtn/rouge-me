@@ -88,7 +88,7 @@ function shouldIFollowPlayer(entity) {
 
 //find a path to a given node, using the EasyStar A* pathfinding algorithm...
 //...and move our entity one node along that path!
-function findPathAndMove(entity, node, isAlert) {
+function findPathAndMove(entity, node, isAlert) {  
     var pathfinder = new EasyStar.js()
     pathfinder.setGrid(map1.maze)
     pathfinder.setAcceptableTiles(['.',',','/'])
@@ -120,9 +120,11 @@ function moveToNode(entity, node) {
                 I) ...and we are on a circular path...
                     i) ...and there isn't another guard in our way...
                     ii) ...scroll back to the start and move to node[1] (start tramping round the circle again!)
+                    iii) (if there is a guard in the way, move in a random direction to let them pass)
                 II)...and we are on a back-and-forth path...
                     i) ...and there isn't another guard in our way...
                     i)... reverse the path and move onto our new node[1] (go back the way we've come!)
+                    iii) (if there is a guard in the way, move in a random direction to let them pass)
             b) ...if we are in the middle of the path, and there isn't another guard in our way, just move onto the next node
         4) if we are not stood on the node we are supposed to be stood on, we need to get back there!
             a) find a path back to the node we're supposed to be stood on!
@@ -138,6 +140,7 @@ function followPath(entity) {
                     const newTile = map[entity.path[j].y][entity.path[j].x]
                     if (isCircularPath(entity.path)) {
                         if (newTile === 'G') {
+                            entity = moveRandomly(entity)
                             return 
                         } else {
                             entity.path[i].t = 0
@@ -145,6 +148,7 @@ function followPath(entity) {
                         }
                     } else {
                         if (newTile === 'G') {
+                            entity = moveRandomly(entity)
                             return 
                         } else {
                             entity.path[i].t = 0
@@ -156,6 +160,7 @@ function followPath(entity) {
                     j = i + 1
                     const newTile = map[entity.path[j].y][entity.path[j].x]
                     if (newTile === 'G') {
+                        entity = moveRandomly(entity)
                         return 
                     } else {
                         entity.path[i].t = 0

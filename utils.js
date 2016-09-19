@@ -43,7 +43,7 @@ function move(entity, direction) {
     const newTile = map[newPosition.y][newPosition.x]
     if (newTile === '.' || newTile === ',' || newTile === '/') {
         return teleportEntity(entity, newPosition, newTile)
-    }  
+    }
     return entity
 }
 //move an entity from its current tile to a new tile!
