@@ -48,30 +48,37 @@ function canSee (entity1, entity2) {
      //(we can't use the number of tiles canSee() has flipped through, because canSee() allows diagonals!)
      distanceFrom = Math.abs((entity2.x - entity1.x)) + Math.abs((entity2.y - entity1.y))
 
-    /*
-      1) If the player is being searched for by an NPC, and there are no walls in the way:
-        a) if the player is in the shadows...
-        b) ...and there are more than (player.seeInShadow) number of tiles between player and NPC...
-        c) ...then they can't be seen.
-        d) Otherwise, they can be seen!
-      2) Else if the player is searching for an NPC, and there are no walls in the way:
-        a) if the NPC is in the shadows...
-        b) ...and there are more than (player.seeInShadow) number of tiles between player and NPC...
-        c) ...then they can't be seen.
-        d) Otherwise, they can be seen!
-    */
-    if (entity2.char === '@') {
-      if (entity2.currentTile === '/' && distanceFrom > entity2.beSeenInShadow) {
-        return false
-      } else {
-        return true
-      }
-    } else {
-      if (entity2.currentTile === '/' && distanceFrom > entity1.seeInShadow) {
-        return false
-      } else {
-        return true
-      }
-    }
 
+     /*
+        If the player is next to a guard... then it's game over time.
+     */
+      if (entity1.char === '@' && distanceFrom === 1) {
+        endGame()
+      }
+
+      /*
+        1) If the player is being searched for by an NPC, and there are no walls in the way:
+          a) if the player is in the shadows...
+          b) ...and there are more than (player.seeInShadow) number of tiles between player and NPC...
+          c) ...then they can't be seen.
+          d) Otherwise, they can be seen!
+        2) Else if the player is searching for an NPC, and there are no walls in the way:
+          a) if the NPC is in the shadows...
+          b) ...and there are more than (player.seeInShadow) number of tiles between player and NPC...
+          c) ...then they can't be seen.
+          d) Otherwise, they can be seen!
+      */
+      else if (entity2.char === '@') {
+        if (entity2.currentTile === '/' && distanceFrom > entity2.beSeenInShadow) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        if (entity2.currentTile === '/' && distanceFrom > entity1.seeInShadow) {
+          return false
+        } else {
+          return true
+        } 
+      }
   }

@@ -55,3 +55,16 @@ function teleportEntity(entity, {x, y}, newTile) {
     entity.y = y
     return(entity)
 }
+
+//a function to end the game. Kapow
+function endGame() {
+    setTimeout (function() {
+        maze = map1.gameover
+        map = maze.map(line => line.split(''))
+        render(map)
+        gameOver = true
+        document.getElementById('text').innerHTML = ''
+        document.getElementById('text2').innerHTML = ''
+        document.getElementById('text2').innerHTML = 'You&#39;re nicked, sunshine<br/>'
+    }, 0)   
+}

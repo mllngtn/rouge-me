@@ -1,4 +1,4 @@
-function canHear(entity1, entity2, range) {
+function canHear(entity1, entity2, range) { 
     //can entity1 hear entity2?
     return rectAroundPoint(entity1, range).some(point => point.x === entity2.x && point.y === entity2.y)
 }

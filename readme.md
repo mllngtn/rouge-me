@@ -22,6 +22,8 @@ The guards can also see and hear you, and will chase you if you get all up in th
 
 If they lose track of you, they will return to their original patrol path.
 
+If they catch you, you can see a delightful ASCII game over screen.
+
 Er.. that's it.
 
 ### @
@@ -73,3 +75,9 @@ Easystar: A* pathfinding in JS (https://github.com/prettymuchbryce/easystarjs)
 Bresenham's algorithm for line of sight - from avok00 on StackOverflow (http://stackoverflow.com/questions/4672279/bresenham-algorithm-in-javascript)
 
 Hearing rectangle - from Ed Robinson's tutorial, which is how I started on this voyage of self discovery (https://gist.github.com/anotheredward/5895c31d007bda14b45fc5e3be694dcf)
+
+## To Do Next
+
+1) Build a little Level
+2) Add a goal and a win-state
+3) Make the guards more intelligent
