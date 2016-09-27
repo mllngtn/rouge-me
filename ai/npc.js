@@ -12,7 +12,6 @@
 function npcScanAndMove(entities, player) {
     var noOfEntitiesScanned = 0;
     for (i = 0; i < entities.length; i++) {
-        entities[i] = npcScan(entities[i], player)
         if (shouldIPause(entities[i])) {
             //do nothing!
         } else if (shouldIFollowPlayer(entities[i])) {
@@ -22,6 +21,7 @@ function npcScanAndMove(entities, player) {
         } else {
             moveRandomly(entities[i])
         }
+        entities[i] = npcScan(entities[i], player)
         noOfEntitiesScanned++
     }
     if (noOfEntitiesScanned === entities.length) {

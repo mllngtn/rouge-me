@@ -20,7 +20,7 @@ The game will tell you if you can see or hear a guard.
 
 The guards can also see and hear you, and will chase you if you get all up in their grill.
 
-Guards cannot see you if you are behind them (NB this is currently only half finished - see message on latest commit)
+Guards cannot see you if you are behind them.
 
 If they lose track of you, they will return to their original patrol path.
 
@@ -80,7 +80,6 @@ Hearing rectangle - from Ed Robinson's tutorial, which is how I started on this 
 
 ## To Do Next
 
-1) Reverse the order in which guards take their turn: they need to move and then scan, rather than scan and then move!
-2) Build a little Level
-3) Add a goal and a win-state
-4) Make the guards more intelligent
+1) Build a little Level
+2) Add a goal and a win-state
+3) Make the guards more intelligent
