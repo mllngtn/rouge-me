@@ -1,5 +1,5 @@
 //let's grab our map and stick it in a big array
-let maze = map1.maze
+let maze = map2.maze
 let map = maze.map(line => line.split(''))
 let gameOver = false
 
@@ -7,8 +7,6 @@ let gameOver = false
 if (playerScan(player, guards)) {
     render(map)
 }
-
-var rendering = false
 
 /*  
     This is the logic that powers the whole show!
@@ -22,7 +20,7 @@ var rendering = false
 document.onkeydown = function(e) {
 
     if (gameOver) {
-        alert('Cease your pestering, insect (...or reload the page to start again).')
+        alert('Reload the page to start again.')
     } else {
         document.getElementById('text').innerHTML = ''
         document.getElementById('text2').innerHTML = ''
@@ -40,5 +38,4 @@ document.onkeydown = function(e) {
             }
         }
     }
-    
 }

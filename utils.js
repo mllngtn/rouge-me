@@ -39,6 +39,7 @@ function showEntity(entity) {
 
 //move a given entity in a given direction, via the teleportEntity function, if the entity is trying to move into a valid tile
 function move(entity, direction) {
+    entity.direction = direction
     const newPosition = addPoint(entity, direction)
     const newTile = map[newPosition.y][newPosition.x]
     if (newTile === '.' || newTile === ',' || newTile === '/') {
@@ -59,7 +60,7 @@ function teleportEntity(entity, {x, y}, newTile) {
 //a function to end the game. Kapow
 function endGame() {
     setTimeout (function() {
-        maze = map1.gameover
+        maze = map2.gameover
         map = maze.map(line => line.split(''))
         render(map)
         gameOver = true

@@ -9,10 +9,11 @@ let player = {
     },
     seeInShadow:4,
     beSeenInShadow:2,
+    direction: {x:0, y:0}
 }
 
 //guard: alert level will increase 1/hearingFactor or 1/seeingFactor every time a guard sees or hears you
-let guard = function (x, y, currentTile, path) {
+let guard = function (x, y, currentTile, path, direction) {
     this.x = x
     this.y = y
     this.currentTile = currentTile
@@ -28,4 +29,5 @@ let guard = function (x, y, currentTile, path) {
         seeingFactor:2,
         path:[]
     }
+    this.direction = direction
 }
