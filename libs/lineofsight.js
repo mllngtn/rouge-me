@@ -43,7 +43,7 @@ function canSee (entity1, entity2) {
       return lineOfSightCalculation(entity1, entity2)
     }
   } else if (distanceFrom === 1) {
-     endGame()
+      endLevel(entity2)     
   } else if (entity2.currentTile === '/' && distanceFrom > entity1.seeInShadow){
     return false
   } else {
@@ -65,7 +65,7 @@ function lineOfSightCalculation (entity1, entity2) {
     var sx = (x1 < x2) ? 1 : -1;
     var sy = (y1 < y2) ? 1 : -1;
     var err = dx - dy;
-
+    
     // Main loop
     while (!((x1 == x2) && (y1 == y2))) {
       var e2 = err << 1;
@@ -80,11 +80,11 @@ function lineOfSightCalculation (entity1, entity2) {
 
       const thisTile = map[y1][x1]
       //if there is a wall between the two entities... then entity1 can see entity2
-      if (thisTile === '#') {
+      if (thisTile.includes('#')) {
           return false
           break
       } 
     }
-    //if there is no wall between the two entities... then entity1 cannot see entity2!   
+    //if there is no wall between the two entities... then entity1 cannot see entity2! 
     return true
   }

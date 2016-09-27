@@ -12,6 +12,15 @@ let player = {
     direction: {x:0, y:0}
 }
 
+let treasure = function (x, y, currentTile) {
+    this.x = x
+    this.y = y
+    this.currentTile = currentTile
+    this.char = 'T'
+    this.seenMessage = 'You see some glittering tresor!<br/>'
+    this.heardMessage = false
+}
+
 //guard: alert level will increase 1/hearingFactor or 1/seeingFactor every time a guard sees or hears you
 let guard = function (x, y, currentTile, path, direction) {
     this.x = x
@@ -30,4 +39,6 @@ let guard = function (x, y, currentTile, path, direction) {
         path:[]
     }
     this.direction = direction
+    this.seenMessage = 'You see a guard.<br/>'
+    this.heardMessage = 'You hear a guard behind the wall.<br/>'
 }

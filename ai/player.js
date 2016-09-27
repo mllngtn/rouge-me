@@ -13,9 +13,9 @@ function playerScan(player, entities) {
         showEntity(entities[i])
         const range = currentTileToRange[entities[i].currentTile]
         if (scan(player, entities[i], range) === 1) {
-            document.getElementById('text').innerHTML += 'You see a guard.<br/>'
+            document.getElementById('text').innerHTML += entities[i].seenMessage
         } else if (scan(player, entities[i], range) === 2) {
-            document.getElementById('text').innerHTML += 'You hear a guard behind the wall.<br/>'
+            document.getElementById('text').innerHTML += entities[i].heardMessage
         } else if (scan(player,entities[i], range) === 3) {
             hideEntity(entities[i])  
         }

@@ -31,7 +31,7 @@ document.onkeydown = function(e) {
             player = movePlayer(player, direction)
             if (npcScanAndMove(guards, player)) {
                 setTimeout(function() {
-                    if (playerScan(player, guards)) {   
+                    if (playerScan(player, guards) && playerScan(player, treasures)) {   
                         render(map)
                     }
                 }, 0)   

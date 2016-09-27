@@ -1,6 +1,8 @@
 function canHear(entity1, entity2, range) { 
-    //can entity1 hear entity2?
-    return rectAroundPoint(entity1, range).some(point => point.x === entity2.x && point.y === entity2.y)
+    //if it is possible for entity2 to be heard... can entity1 hear entity2?
+    if(entity2.heardMessage) {
+         return rectAroundPoint(entity1, range).some(point => point.x === entity2.x && point.y === entity2.y)
+    }
 }
 
 function rectAroundPoint(point, diameter) {

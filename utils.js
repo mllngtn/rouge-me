@@ -8,6 +8,8 @@ function render(map) {
                 map[i][j] = '<span style="color:red">!</span>'
             } else if (map[i][j] === '#' || map[i][j] === '@' || map[i][j] === 'G') {
                 map[i][j] = '<span style="color:black">' + map[i][j] + '</span>'
+            } else if (map[i][j] === 'T') {
+                map[i][j] = '<span style="color:gold">T</span>'
             }
         }
     }
@@ -69,14 +71,14 @@ function teleportEntity(entity, {x, y}, newTile) {
 }
 
 //a function to end the game. Kapow
-function endGame() {
-    setTimeout (function() {
-        maze = map2.gameover
-        map = maze.map(line => line.split(''))
-        render(map)
-        gameOver = true
-        document.getElementById('text').innerHTML = ''
-        document.getElementById('text2').innerHTML = ''
-        document.getElementById('text2').innerHTML = 'You&#39;re nicked, sunshine<br/>'
-    }, 0)   
+function endLevel(entity) {
+        setTimeout (function() {
+            maze = map2.levelend[entity.constructor.name].maze
+            map = maze.map(line => line.split(''))
+            render(map)
+            gameOver = true
+            document.getElementById('text').innerHTML = ''
+            document.getElementById('text2').innerHTML = ''
+            document.getElementById('text2').innerHTML = map2.levelend[entity.constructor.name].message
+        }, 0) 
 }
