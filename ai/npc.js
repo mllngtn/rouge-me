@@ -42,17 +42,20 @@ function npcScan(entity, player) {
     const range = currentTileToRange[player.currentTile]
     if (scan(entity, player, range) === 1) {
         entity = increaseAlertLevel(entity, entity.alert.seeingFactor)
+        entity.char = '?'
         document.getElementById('text2').innerHTML += 'Oh shit! A guard can see you.<br/>'
     } else if (scan(entity, player, range) === 2) {
         entity = increaseAlertLevel(entity, entity.alert.hearingFactor)
+        entity.char = '?'
         document.getElementById('text2').innerHTML += 'Watch out! A guard can hear you.<br/>'
     } else if (scan(entity, player, range) === 3) {
         entity.alert.count++
-        if (entity.alert.count === entity.maxAlertCount) {
-            if (entity.alert.level > 0) {
-                entity.alert.level = 0
-                document.getElementById('text2').innerHTML += '<span style="color:#82E0AA">You remember that guard from earlier? They&#39;ve forgotten all about you. PHEW.</span><br/>'
-            }
+        if (entity.alert.count > 1 && entity.alert.level < 1) {
+            entity.char = 'G'
+        }
+        if (entity.alert.count === entity.maxAlertCount && entity.alert.level > 0) {
+            entity.alert.level = 0
+            document.getElementById('text2').innerHTML += '<span style="color:#82E0AA">You remember that guard from earlier? They&#39;ve forgotten all about you. PHEW.</span><br/>'
         }
     }
     return entity
@@ -79,6 +82,7 @@ function shouldIPause(entity) {
 //they should chase the player!
 function shouldIFollowPlayer(entity) {
     if (entity.alert.count < entity.maxAlertCount && entity.alert.level >= 1) {
+        entity.char = '!'
         document.getElementById('text2').innerHTML += 'Now you&#39;ve done it!<br/>A guard has become suspicious and has started following you.<br/>'
         return true
     } else {
@@ -139,7 +143,7 @@ function followPath(entity) {
                     j = 1
                     const newTile = map[entity.path[j].y][entity.path[j].x]
                     if (isCircularPath(entity.path)) {
-                        if (newTile === 'G') {
+                        if (newTile === 'G' || newTile === '?' || newTile === '!') {
                             entity = moveRandomly(entity)
                             return 
                         } else {
@@ -147,7 +151,7 @@ function followPath(entity) {
                             entity.path[j].t = 1
                         }
                     } else {
-                        if (newTile === 'G') {
+                        if (newTile === 'G' || newTile === '?' || newTile === '!') {
                             entity = moveRandomly(entity)
                             return 
                         } else {
@@ -159,7 +163,7 @@ function followPath(entity) {
                 } else {
                     j = i + 1
                     const newTile = map[entity.path[j].y][entity.path[j].x]
-                    if (newTile === 'G') {
+                    if (newTile === 'G' || newTile === '?' || newTile === '!') {
                         entity = moveRandomly(entity)
                         return 
                     } else {

@@ -1,5 +1,16 @@
 //map rendering function. Take our map array and bung it into the 'maze' pre in the html
 function render(map) {
+    for (i=0; i < map.length; i++) {
+        for (j=0; j < map[i].length; j++) {
+            if ( map[i][j] === '?') {
+                map[i][j] = '<span style="color:orange">?</span>'
+            } else if (map[i][j] === '!') {
+                map[i][j] = '<span style="color:red">!</span>'
+            } else if (map[i][j] === '#' || map[i][j] === '@' || map[i][j] === 'G') {
+                map[i][j] = '<span style="color:black">' + map[i][j] + '</span>'
+            }
+        }
+    }
     document.getElementById('maze').innerHTML = map.map(characters => characters.join('')).join('\n')
 }
 
