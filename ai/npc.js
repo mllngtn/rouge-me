@@ -41,15 +41,15 @@ function npcScanAndMove(entities, player) {
 function npcScan(entity, player) {
     const range = currentTileToRange[player.currentTile]
     if (scan(entity, player, range) === 1) {
+        if (entity.alert.level < 1) {
+            entity.char = '?'
+        }
         entity = increaseAlertLevel(entity, entity.alert.seeingFactor)
-        if (entity.alert.level < 1) {
-            entity.char = '?'
-        }
     } else if (scan(entity, player, range) === 2) {
-        entity = increaseAlertLevel(entity, entity.alert.hearingFactor)
         if (entity.alert.level < 1) {
             entity.char = '?'
         }
+        entity = increaseAlertLevel(entity, entity.alert.hearingFactor)
     } else if (scan(entity, player, range) === 3) {
         entity.alert.count++
         if (entity.alert.count > 1 && entity.alert.level < 1) {
