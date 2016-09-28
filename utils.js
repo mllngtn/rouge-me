@@ -22,6 +22,7 @@ const keyCodeToDirection = {
     38: {x: 0, y: -1},
     39: {x: 1, y: 0},
     40: {x: 0, y: 1},
+    32: {x: 0, y: 0},
 }
 
 //what is the diameter of the rectangle of sound that surrounds an entity when they step on certain tiles?
@@ -70,9 +71,29 @@ function teleportEntity(entity, {x, y}, newTile) {
     return(entity)
 }
 
+//a function that moves the map if the player wanders further than half the length of the viewport in any direction
+function moveMap(e) {
+
+    var mazeDiv = document.getElementById("maze")
+    var leftpx = parseInt(mazeDiv.style.left)
+    var toppx = parseInt(mazeDiv.style.top)
+
+    if (e.keyCode === 37 && player.x > ((clientWidth / 15) / 2)) {
+        mazeDiv.style.left = leftpx + 15 + 'px'
+    } else if (e.keyCode === 38 && player.y > (clientHeight / 30) / 2) {
+        mazeDiv.style.top = toppx + 30 + 'px'
+    } else if (e.keyCode === 39 && maze[0].length - 2 > player.x && player.x > ((clientWidth / 15) / 2) - 1) {
+        mazeDiv.style.left = leftpx - 15 + 'px'
+    }  else if (e.keyCode === 40 && maze.length - 2 > player.y && player.y > ((clientHeight / 30) / 2) - 1) {
+        mazeDiv.style.top = toppx - 30 + 'px'
+    }
+}
+
 //a function to end the game. Kapow
 function endLevel(entity) {
         setTimeout (function() {
+            document.getElementById("maze").style.left = '10px'
+            document.getElementById("maze").style.top = '10px'
             maze = map2.levelend[entity.constructor.name].maze
             map = maze.map(line => line.split(''))
             render(map)

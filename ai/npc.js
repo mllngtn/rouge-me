@@ -42,12 +42,14 @@ function npcScan(entity, player) {
     const range = currentTileToRange[player.currentTile]
     if (scan(entity, player, range) === 1) {
         entity = increaseAlertLevel(entity, entity.alert.seeingFactor)
-        entity.char = '?'
-        document.getElementById('text2').innerHTML += 'Oh shit! A guard can see you.<br/>'
+        if (entity.alert.level < 1) {
+            entity.char = '?'
+        }
     } else if (scan(entity, player, range) === 2) {
         entity = increaseAlertLevel(entity, entity.alert.hearingFactor)
-        entity.char = '?'
-        document.getElementById('text2').innerHTML += 'Watch out! A guard can hear you.<br/>'
+        if (entity.alert.level < 1) {
+            entity.char = '?'
+        }
     } else if (scan(entity, player, range) === 3) {
         entity.alert.count++
         if (entity.alert.count > 1 && entity.alert.level < 1) {
@@ -55,7 +57,6 @@ function npcScan(entity, player) {
         }
         if (entity.alert.count === entity.maxAlertCount && entity.alert.level > 0) {
             entity.alert.level = 0
-            document.getElementById('text2').innerHTML += '<span style="color:#82E0AA">You remember that guard from earlier? They&#39;ve forgotten all about you. PHEW.</span><br/>'
         }
     }
     return entity
@@ -83,7 +84,7 @@ function shouldIPause(entity) {
 function shouldIFollowPlayer(entity) {
     if (entity.alert.count < entity.maxAlertCount && entity.alert.level >= 1) {
         entity.char = '!'
-        document.getElementById('text2').innerHTML += 'Now you&#39;ve done it!<br/>A guard has become suspicious and has started following you.<br/>'
+        document.getElementById('text2').innerHTML += 'You are being followed.<br/>'
         return true
     } else {
         return false

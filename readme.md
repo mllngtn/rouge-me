@@ -12,7 +12,7 @@ Open 'rouge.html' in Chrome, and use the arrow keys to wander about.
 
 ## What's happening?
 
-You play the part of a friendly @ sign.
+You play the part of a friendly @ sign, on the hunt for treasure and that.
 
 Watch out! There are guards patrolling about. Use your spidey senses to your advantage.
 
@@ -26,15 +26,21 @@ If they lose track of you, they will return to their original patrol path.
 
 If they catch you, you can see a delightful ASCII game over screen.
 
+If you find some treasure, you can see an even more delightful ASCII congratulatory screen.
+
 Er.. that's it.
 
 ### @
 
 This is you. Hello, you!
 
-### G 
+### G
 
 This is a guard. Boooooo. Guards will patrol around until such time as they notice you.
+
+### T 
+
+This is some treasure. You will probably want to approach the treasure.
 
 ### .
 
@@ -80,6 +86,5 @@ Hearing rectangle - from Ed Robinson's tutorial, which is how I started on this 
 
 ## To Do Next
 
-1) Build a little Level
-2) Add a goal and a win-state
-3) Make the guards more intelligent
+1) Build a little level
+2) Make the guards more intelligent

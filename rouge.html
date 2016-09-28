@@ -1,22 +1,37 @@
-<!-- pre tag because that specifies monospace fonts for the maze-->
-<pre id="maze" style="font-size:2em; color:grey">
-
-</pre>
-
-<span id="text">
-    Welcome to my little gammon.<br/>
-</span>
-<span id="text2" style="color:#EC7063">
-
-</span>
-
-<script src="utils.js"></script>
-<script src="cast.js"></script>
-<script src="map2.js"></script>
-<script src="libs/pathfinding.js"></script>
-<script src="libs/lineofSight.js"></script>
-<script src="ai/shared.js"></script>
-<script src="ai/npc.js"></script>
-<script src="ai/player.js"></script>
-<script src="libs/hearing.js"></script>
-<script src="rouge.js"></script>
+<!DOCTYPE html>
+    <head>
+        <title>Rouge Me</title>
+        <link rel="stylesheet" type="text/css" href="css/rouge.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="info-bar">
+                <span id="text">
+                    Welcome to my little gammon.<br/><br/>
+                </span>
+                <span id="text2">
+                    Use the arrow keys to move.<br/>
+                    Space bar to stay where you are for a turn.
+                </span>
+            </div>
+            <div id="maze-outer-position">
+                <div id="maze-inner-position">
+                    <!-- pre tag because that specifies monospace fonts for the maze-->
+                    <pre id="maze" style="left:10px; top:10px;">
+                        <!-- this is where the action is -->
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="utils.js"></script>
+    <script src="cast.js"></script>
+    <script src="map2.js"></script>
+    <script src="libs/pathfinding.js"></script>
+    <script src="libs/lineofSight.js"></script>
+    <script src="ai/shared.js"></script>
+    <script src="ai/npc.js"></script>
+    <script src="ai/player.js"></script>
+    <script src="libs/hearing.js"></script>
+    <script src="rouge.js"></script>  
+</html>
