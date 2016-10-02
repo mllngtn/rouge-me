@@ -25,6 +25,7 @@ if (playerScan(player, guards)) {
 */
 document.onkeydown = function(e) {
 
+    e.preventDefault()
     moveMap(e)
 
     if (gameOver) {
@@ -35,8 +36,7 @@ document.onkeydown = function(e) {
 
         const direction = keyCodeToDirection[e.keyCode]
         if (direction) {
-            e.preventDefault()
-            player = movePlayer(player, direction)
+            player = movePlayer(player, direction, e.keyCode)
             if (npcScanAndMove(guards, player)) {
                 setTimeout(function() {
                     if (playerScan(player, guards) && playerScan(player, treasures)) {   

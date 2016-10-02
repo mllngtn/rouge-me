@@ -9,7 +9,9 @@ let player = {
     },
     seeInShadow:4,
     beSeenInShadow:2,
-    direction: {x:0, y:0}
+    direction: {x:0, y:0},
+    isMoving: false,
+    heardMessage: 'A guard has heard you'
 }
 
 let treasure = function (x, y, currentTile) {

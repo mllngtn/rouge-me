@@ -26,12 +26,18 @@ function playerScan(player, entities) {
     }
 }
 //move the player! With special UI messages for special tiles
-function movePlayer (player, direction) {
-    move(player, direction)
-    if (player.currentTile === ',') {
-        document.getElementById('text').innerHTML += 'Shuffle shuffle shuffle. Grass makes less noise.<br/>'
-    } else if (player.currentTile === '/') {
-        document.getElementById('text').innerHTML += 'You hunker in the shadows, shrouded in darkness etc.<br/>'
+function movePlayer (player, direction, keyCode) {
+    if (keyCode === 32) {
+        player.isMoving = false
+        document.getElementById('text').innerHTML += 'You are still and silent.<br/>'
+    } else {
+        player.isMoving = true
+        move(player, direction)
+        if (player.currentTile === ',') {
+            document.getElementById('text').innerHTML += 'Shuffle shuffle shuffle. Grass makes less noise.<br/>'
+        } else if (player.currentTile === '/') {
+            document.getElementById('text').innerHTML += 'You hunker in the shadows, shrouded in darkness etc.<br/>'
+        }
     }
     return player
 }

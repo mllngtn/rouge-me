@@ -32,25 +32,26 @@ function npcScanAndMove(entities, player) {
 /*
     Ask if a given NPC knows where the player is, by calling the scan() function (found in ai/shared.js):
     1) They see the player, and increase their alert level via the increaseAlertLevel() function
-    2) They hear the player, and increase their alert level via the increasAlertLevel() function
+    2) They hear the player and increase their alert level via the increasAlertLevel() function (NB: the player needs to be moving to be heard)
     3) They neither see nor hear the player, and we increase alert.count by 1
        (alert.count counts the number of turns since an entity last saw the player. 
        When alert.count reaches its maxAlertCount, 
        the entity forgets they ever saw the player (alert.level returns to 0)).
 */
 function npcScan(entity, player) {
+    console.log(player.isMoving)
     const range = currentTileToRange[player.currentTile]
     if (scan(entity, player, range) === 1) {
         if (entity.alert.level < 1) {
             entity.char = '?'
         }
         entity = increaseAlertLevel(entity, entity.alert.seeingFactor)
-    } else if (scan(entity, player, range) === 2) {
+    } else if (scan(entity, player, range) === 2 && player.isMoving) {
         if (entity.alert.level < 1) {
             entity.char = '?'
         }
         entity = increaseAlertLevel(entity, entity.alert.hearingFactor)
-    } else if (scan(entity, player, range) === 3) {
+    } else if (scan(entity, player, range) === 3 || !player.isMoving) {
         entity.alert.count++
         if (entity.alert.count > 1 && entity.alert.level < 1) {
             entity.char = 'G'
