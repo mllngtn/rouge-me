@@ -43,7 +43,8 @@ function canSee (entity1, entity2) {
       return lineOfSightCalculation(entity1, entity2)
     }
   } else if (distanceFrom === 1) {
-      endLevel(entity2)     
+      var endLevelMessage = entity2.endLevelMessage
+      endLevel(entity2, endLevelMessage)     
   } else if (entity2.currentTile === '/' && distanceFrom > entity1.seeInShadow){
     return false
   } else {

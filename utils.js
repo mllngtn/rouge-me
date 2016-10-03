@@ -90,7 +90,7 @@ function moveMap(e) {
 }
 
 //a function to end the game. Kapow
-function endLevel(entity) {
+function endLevel(entity, endLevelMessage) {
         setTimeout (function() {
             document.getElementById("maze").style.left = '10px'
             document.getElementById("maze").style.top = '10px'
@@ -100,6 +100,6 @@ function endLevel(entity) {
             gameOver = true
             document.getElementById('text').innerHTML = ''
             document.getElementById('text2').innerHTML = ''
-            document.getElementById('text2').innerHTML = map2.levelend[entity.constructor.name].message
+            document.getElementById('text2').innerHTML = endLevelMessage
         }, 0) 
 }

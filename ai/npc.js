@@ -42,11 +42,13 @@ function npcScan(entity, player) {
     console.log(player.isMoving)
     const range = currentTileToRange[player.currentTile]
     if (scan(entity, player, range) === 1) {
+        player.alerts = player.alerts + 2
         if (entity.alert.level < 1) {
             entity.char = '?'
         }
         entity = increaseAlertLevel(entity, entity.alert.seeingFactor)
     } else if (scan(entity, player, range) === 2 && player.isMoving) {
+        player.alerts++
         if (entity.alert.level < 1) {
             entity.char = '?'
         }
@@ -60,7 +62,15 @@ function npcScan(entity, player) {
             entity.alert.level = 0
         }
     }
-    return entity
+    var score = (100 - player.alerts)
+    document.getElementById('text3').innerHTML = '<br/>Score: ' + score 
+    if (score <= 0) {
+        document.getElementById('text3').innerHTML = '<br/>Score: 0' 
+        var endLevelMessage = 'You set off the alarm too many times...<br/>' 
+        endLevel(entity, endLevelMessage)
+    } else {
+        return entity
+    }   
 }
 
 //increase an entity's alert level by a 1 over a given factor

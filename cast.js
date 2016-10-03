@@ -11,7 +11,8 @@ let player = {
     beSeenInShadow:2,
     direction: {x:0, y:0},
     isMoving: false,
-    heardMessage: 'A guard has heard you'
+    heardMessage: 'A guard has heard you',
+    alerts: 0
 }
 
 let treasure = function (x, y, currentTile) {
@@ -21,6 +22,7 @@ let treasure = function (x, y, currentTile) {
     this.char = 'T'
     this.seenMessage = 'You see some glittering tresor!<br/>'
     this.heardMessage = false
+    this.endLevelMessage = '<span style="color:gold">You have found le tresor and you are le winner!<br/></span>'
 }
 
 //guard: alert level will increase 1/hearingFactor or 1/seeingFactor every time a guard sees or hears you
@@ -43,4 +45,5 @@ let guard = function (x, y, currentTile, path, direction) {
     this.direction = direction
     this.seenMessage = 'You see a guard.<br/>'
     this.heardMessage = 'You hear a guard behind the wall.<br/>'
+    this.endLevelMessage = 'You&#39;re nicked, sunshine...<br/>'
 }

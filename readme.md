@@ -28,6 +28,8 @@ If they catch you, you can see a delightful ASCII game over screen.
 
 If you find some treasure, you can see an even more delightful ASCII congratulatory screen.
 
+You are scored out of 100. -2 every time you are seen, -1 every time you are heard.
+
 Er.. that's it.
 
 ### @
