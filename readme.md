@@ -88,5 +88,7 @@ Hearing rectangle - from Ed Robinson's tutorial, which is how I started on this 
 
 ## To Do Next
 
-1) Build a little level
-2) Make the guards more intelligent
+1) Build a little level<br/>
+2) Make the guards more intelligent<br/>
+3) You should pick up treasure when you're stood ON it, not NEXT to it<br/>
+4) Info bar: how to cope when there's too much info in it?

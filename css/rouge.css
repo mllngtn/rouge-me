@@ -12,7 +12,7 @@
     padding:20px; 
     z-index: 10; 
     height:100px; 
-    overflow:hidden;
+    overflow:scroll;
     font-size:0.9em;
 }
 

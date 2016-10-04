@@ -39,7 +39,6 @@ function npcScanAndMove(entities, player) {
        the entity forgets they ever saw the player (alert.level returns to 0)).
 */
 function npcScan(entity, player) {
-    console.log(player.isMoving)
     const range = currentTileToRange[player.currentTile]
     if (scan(entity, player, range) === 1) {
         player.alerts = player.alerts + 2
@@ -63,9 +62,9 @@ function npcScan(entity, player) {
         }
     }
     var score = (100 - player.alerts)
-    document.getElementById('text3').innerHTML = '<br/>Score: ' + score 
+    document.getElementById('text3').innerHTML = 'Score: ' + score + '<br/><br/>'
     if (score <= 0) {
-        document.getElementById('text3').innerHTML = '<br/>Score: 0' 
+        document.getElementById('text3').innerHTML = 'Score: 0<br/><br/>' 
         var endLevelMessage = 'You set off the alarm too many times...<br/>' 
         endLevel(entity, endLevelMessage)
     } else {
@@ -95,7 +94,7 @@ function shouldIPause(entity) {
 function shouldIFollowPlayer(entity) {
     if (entity.alert.count < entity.maxAlertCount && entity.alert.level >= 1) {
         entity.char = '!'
-        document.getElementById('text2').innerHTML += 'You are being followed.<br/>'
+        document.getElementById('text2').innerHTML = 'You are being followed.<br/>'
         return true
     } else {
         return false

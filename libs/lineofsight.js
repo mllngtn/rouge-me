@@ -34,8 +34,8 @@ function canSee (entity1, entity2) {
     if (
           ydir === 1 && entity2.y < entity1.y ||
           ydir === -1 && entity2.y > entity1.y ||
-          xdir === 1 && entity2.x > entity1.x ||
-          xdir === -1 && entity2.x < entity1.x ||
+          xdir === -1 && entity2.x > entity1.x ||
+          xdir === 1 && entity2.x < entity1.x ||
           entity2.currentTile === '/' && distanceFrom > entity2.beSeenInShadow
       ) {
       return false
